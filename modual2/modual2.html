@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.bundle.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <table class="table table-responsive table-bordered" id="myTable">
+        <thead>
+            <th>ProductName</th>
+            <th>Quantity</th>
+            <th>Price Per Product</th>
+            <th>Total Price</th>
+            <th>RemoveItem</th>
+        </thead>
+        <tbody>
+            <tr id="tr1">
+                <td align="center">Product-1</td>
+                <td><input type="text" placeholder="Enter Quantity" class="form-control"
+                        onkeyup="changeprice(this,'tprice1','totalprice1')"></td>
+                <td align="center" id="tprice1">$29.99</td>
+                <td id="totalprice1">0</td>
+                <td align="center"><input type="button" value="Remove" class="btn btn-danger"
+                        onclick="deleteRows(this,'totalprice1')"></td>
+            </tr>
+
+            <tr id="tr2">
+                <td align="center">Product-2</td>
+                <td><input type="text" placeholder="Enter Quantity" class="form-control"
+                        onkeyup="changeprice(this,'tprice2','totalprice2')"></td>
+                <td align="center" id="tprice2">$12.99</td>
+                <td id="totalprice2">0</td>
+                <td align="center"><input type="button" value="Remove" class="btn btn-danger"
+                        onclick="deleteRows(this,'totalprice2')"></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td align="center"><b>SUBTOTAL</b></td>
+                <td align="center" id="subtotal"></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        var flag = 0;
+        var sum = 0.00;
+        function changeprice(ip, id1, id2) {
+            console.log(ip);
+            var qty = ip.value;
+            var perprice = document.getElementById(id1).innerHTML;
+            var tpr = parseFloat(perprice.split("$")[1]) * parseFloat(qty);
+            document.getElementById(id2).innerHTML = tpr;
+            if (!document.getElementById("totalprice1")) {
+                sum = tpr;
+                document.getElementById("subtotal").innerHTML = sum;
+            }
+            else if (!document.getElementById("totalprice2")) {
+                sum = tpr;
+                document.getElementById("subtotal").innerHTML = sum;
+            }
+            else {
+                var amt = document.getElementById("totalprice1").innerHTML
+                var amt2 = document.getElementById("totalprice2").innerHTML
+                sum = parseFloat(amt2) + parseFloat(amt);
+                document.getElementById("subtotal").innerHTML = sum;
+            }
+
+        }
+        function deleteRows(r, id) {
+            var amt = document.getElementById(id).innerHTML
+            sum = parseFloat(sum) - parseFloat(amt)
+            document.getElementById("subtotal").innerHTML = sum;
+            var rowNo = r.parentElement.parentElement.rowIndex;
+            document.getElementById("myTable").deleteRow(rowNo);
+        }
+    </script>
+</body>
+
+</html>
